@@ -117,7 +117,7 @@ public class PersonRepositoryTest {
                                         .where(qPerson.name.like("%"+"아"+"%"))
                                         .where(qPerson.sal.lt(3000))
                                         .orderBy(qPerson.id.desc());
-
+        //반복해서 출력
         List<PersonEntity> plists = query.fetch();
         for(PersonEntity p : plists){
             System.out.println(p);
