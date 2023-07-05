@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>viewEx06</title>
+</head>
+<body>
+viewEx06.html입니다.
+[구구단]
+
+<div th:each="num1 :${#numbers.sequence(2,9)}">
+    <span th:text="${'***'+num1+'단***'}"></span>
+    <div th:each="num2 :${#numbers.sequence(1,9)}">
+        <span th:text="${num1+'*'+num2+'='+num1*num2}"></span>
+    </div>
+    ===================<br>
+</div>
+
+<br><br>
+<table border="1">
+    <tr>
+        <th th:each="titleDan :${#numbers.sequence(2,9)}" th:text="${titleDan+'단'}" style="background-color:cyan;"></th>
+    </tr>
+    <tr th:each="su :${#numbers.sequence(1,9)}">
+        <td th:each="dan :${#numbers.sequence(2,9)}" th:text="${dan+'*'+su+'='+dan2*su}"></td>
+    </tr>
+</table>
+</body>
+</html>

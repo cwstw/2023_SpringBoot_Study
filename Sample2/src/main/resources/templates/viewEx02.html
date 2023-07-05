@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+viewEx02.html 입니다.
+<div>
+    상품 id : <span th:text="${itemDto.id}"></span>
+</div>
+<div>
+    상품명 : <span th:text="${itemDto.itemNm}"></span>
+</div>
+<div>
+    상품 가격 : <span th:text="${itemDto.price}"></span>
+</div>
+<div>
+    상세 설명 : <span th:text="${itemDto.itemDetail}"></span>
+</div>
+<div>
+    등록 시간 : <span th:text="${itemDto.regTime}"></span>
+</div>
+</body>
+</html>
