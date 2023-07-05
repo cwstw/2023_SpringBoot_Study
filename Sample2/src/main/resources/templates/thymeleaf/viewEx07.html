@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>viewEx07</title>
+</head>
+<body>
+viewEx07.html입니다.
+
+<div>
+    <a th:href="@{/thymeleaf/ex01}">예제1 페이지로 이동</a>
+</div>
+<div>
+    <a th:href="@{http://www.thymeleaf.org}">Thymeleaf 홈페이지로 이동</a>
+</div>
+<div>
+    <a th:href="@{/thymeleaf/ex08(param1='abc',param2='def')}">Thymeleaf 파라미터 전송</a>
+</div>
+
+</body>
+</html>

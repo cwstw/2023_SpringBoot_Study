@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -81,8 +82,54 @@ public class ThymeleafController {
         model.addAttribute("itemDtoList",itmeDtoList);
         return "thymeleaf/viewEx05";
     }//Exam05
+
     @GetMapping(value="/ex06")
     public String Exam06(){
          return "thymeleaf/viewEx06";
-    }//Exam05
+    }//Exam06
+
+    @GetMapping(value="/ex07")
+    public String Exam07(){
+         return "thymeleaf/viewEx07";
+    }//Exam07
+
+    @GetMapping(value="/ex08")
+    public String Exam08(
+            @RequestParam("param1") String param1,
+            @RequestParam("param2") String param2,
+            Model model){
+            //만약 넘어오는 값과 변수명이 같다면 생략 가능
+            //@RequestParam("param2") String param2 => String param1
+            //requestparam으로 넘길 시 해당 변수에 값이 없으면 에러
+                if(param1.equals(null)){
+                    param1 = "하하하";
+                }
+                if(param2.equals(null)){
+                    param2 = "호호호";
+                }
+                model.addAttribute("param1",param1);
+                model.addAttribute("param2",param2);
+         return "thymeleaf/viewEx08";
+    }//Exam08
+
+    @GetMapping(value="/ex09")
+    public String Exam09(){
+        return "thymeleaf/viewEx09";
+    }//Exam09
+
+    @GetMapping(value="/first")
+    public String first(){
+        return "thymeleaf/first";
+    }//fisrt
+
+    @GetMapping(value="/second")
+    public String second(){
+        return "thymeleaf/second";
+    }//second
+
+    @GetMapping(value="/third")
+    public String third(){
+        return "thymeleaf/third";
+    }//third
+
 }
