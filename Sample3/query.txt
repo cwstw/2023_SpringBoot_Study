@@ -1,0 +1,8 @@
+insert into movies(num,id,name,age,genre,time,partner,memo)
+values(10,'kim','김길동',30,'코미대,액션','10~12',2,'좌석을 넓혀주세요.');
+
+insert into movies(num,id,name,age,genre,time,partner,memo)
+values(20,'park','박세리',50,'공포,액션','10~12',2,'좌석을 넓혀주세요.');
+
+commit;
+select * from movies;

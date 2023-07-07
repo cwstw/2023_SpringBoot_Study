@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+<th:block layout:fragment="css">
+  <style>
+  .fieldError{
+    color:red;
+    fon-size:13pt;
+  }
+</style>
+</th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+  ${document}.ready(function(){
+    //장르 가져오기 [[]]로 사용
+    var genreString = [[${movieBean.genre}]];
+    console.log("genreString : "+genreString); //공포, 애니메이션
+
+    var genreList = $('input[name=genre]'); //공포, 코미디, 액션, 애니메이션
+    genreList.each(function(){
+      var curr = $(this).val(); //공포
+      var result = genreString.indexOf(curr); //있으면 0, 없으면 -1
+      console.log("curr : "+curr);
+      console.log("result : "+result);
+      //만약 result가 -1이 아니면 체크
+      if(result != -1){
+        $(this).attr('checked',true);
+      }
+    });
+
+    //파트너 정보 가져오기
+    var partnerString = [[${movieBean.partner}]]; //2, 4
+    console.log("partnerString : "+partnerString);
+
+    var genreList = $('input[name=partner]');
+    //id가 partner?인 곳에 checked 설정
+    ${('#partner'+partnerString).attr('checked',true);
+    });
+  </script>
+</th:block>
+<!--이 영역의 위 아래로 레이아웃이 자동 삽입됨-->
+<div class="content" layout:fragment="content">
+  movie/insert.html
+  <h2>영화 등록</h2>
+  <form name="myform" action="/movie/insert" method="post" th:object="${movieBean}">
+    <div class="form-group">
+      <b>아이디</b>
+      <input class="form-control" type="text" th:field="${movieBean.id}" placeholder="아이디를(을) 입력해주세요">
+      <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>이름</b>
+      <input class="form-control" type="text" th:field="*{name}" placeholder="이름를(을) 입력해주세요">
+      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>나이</b>
+      <input class="form-control" type="text" th:field="*{age}" placeholder="나이를(을) 입력해주세요">
+      <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>선호 장르</b>
+      <div class="form-check-inline">
+        <input class="form-check-input" name="genre" value="공포" type="checkbox">공포
+        <input class="form-check-input" name="genre" value="코미디" type="checkbox">코미디
+        <input class="form-check-input" name="genre" value="액션" type="checkbox">액션
+        <input class="form-check-input" name="genre" value="애니메이션" type="checkbox">애니메이션
+      </div>
+      <p th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>선호 시간대</b>
+      <select class="custom-select">
+        <option value="">--- 선택해주세요</option>
+        <option value="8 ~ 10">8 ~ 10</option>
+        <option value="10 ~ 12">10 ~ 12</option>
+        <option value="12 ~ 14">12 ~ 14</option>
+        <option value="14 ~ 16">14 ~ 16</option>
+        <option value="16 ~ 18">16 ~ 18</option>
+        <option value="18 ~ 20">18 ~ 20</option>
+      </select>
+      <p th:if="${#fields.hasErrors('time')}" th:errors="*{time}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>동반 관객수</b>
+      <div class="form-control">
+                <span th:each="idx: ${#numbers.sequence(1, 5)}">
+                    <div class="form-check-inline">
+                      <!--반복 될 때마다 id가 partner1, partner2,...로 변경-->
+                        <input type="radio" th:id="partner+${idx}" class="form-check-input" name="partner" th:value="${idx}" th:text="${idx}">
+                      </label>
+                    </div>
+                </span>
+      </div>
+      <p th:if="${#fields.hasErrors('partner')}" th:errors="*{partner}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>영화관 개선사항</b>
+      <textarea class="form-control" name="memo" placeholder="개선 사항을(를) 입력해주세요."></textarea>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn btn-primary" type="submit" id="submitButton">영화 등록</button>
+    </div>
+  </form>
+</div>
+</html>

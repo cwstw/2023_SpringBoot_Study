@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function deleteConfirm(){
+            var answer = confirm("삭제할까요?");
+            return answer;
+        }
+</script>
+</th:block>
+<div class="content" layout:fragment="content">
+    <h2>영화 목록 페이지</h2>
+    <form name="myform" action="" method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <input type="checkbox">번호
+                </th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>나이</th>
+                <th>좋아하는 장르</th>
+                <th>즐겨보는 시간대</th>
+                <th>동반관객수</th>
+                <th>개선사항</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bean : ${movies}">
+                <td align="center">
+                    <input type="checkbox">
+                    <label th:text="${bean.num}"></label>
+                </td>
+                <td th:text="${bean.id}"></td>
+                <td th:text="${bean.name}" th:href="@{/movie/detail(num=${bean.num})}"></td>
+                <td th:text="${bean.age}"></td>
+                <td th:text="${bean.genre}"></td>
+                <td th:text="${bean.time}"></td>
+                <td th:text="${bean.partner}"></td>
+                <td th:text="${bean.memo}"></td>
+                <td th:href="@{movie/update(num=${bean.num})}">수정</td>
+                <td th:href="@{movie/delete(num=${bean.num})}" onClick="return deleteConfirm()">삭제</td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onClick="location.href='/movie/insert'">추가</button>
+        &nbsp;&nbsp;
+        <button type="button" class="btn btn-danger">선택항목 삭제</button>
+    </form>
+</div>
+
+</html>
