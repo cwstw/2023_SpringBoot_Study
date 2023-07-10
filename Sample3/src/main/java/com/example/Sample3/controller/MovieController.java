@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -90,4 +91,14 @@ public class MovieController {
         return "redirect:/";
     }
 
+    @PostMapping(value = "movie/checkDelete")
+    public String chkDelete(int[] rowcheck){ // 14 5 7
+        List<Integer> delList = new ArrayList<Integer>();
+        for(int i=0; i<rowcheck.length; i++){
+            System.out.println("num : " + rowcheck[i]);
+            delList.add(rowcheck[i]);
+        }
+        movieService.deleteAllByNum(delList);
+        return "redirect:/";
+    }
 }

@@ -33,4 +33,8 @@ public class MovieService {
         Movie movie = movieRepository.findByNum(num); // select * from movie where num=20
         movieRepository.delete(movie);
     }
+
+    public void deleteAllByNum(List<Integer> row) {
+        movieRepository.deleteAllById(row);
+    }
 }

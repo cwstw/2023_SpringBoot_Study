@@ -30,7 +30,10 @@
         <td>
           <input type="checkbox" name="row" th:value="${book.no}" th:text="${book.no}">
         </td>
-        <td th:href="@{'/book/detail?num='+${book.no}}" th:text="${book.title}"></td>
+        <td>
+          <a th:href="@{/book/detail(no=${book.no})}"  th:text="${book.title}">
+          </a>
+        </td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.publisher}"></td>
         <td th:text="${book.price}"></td>
@@ -39,7 +42,7 @@
         <td th:text="${book.bookstore}"></td>
         <td th:text="${book.count}"></td>
         <td>
-          <a th:href="@{'/book/update?num=' + ${book.no}}">수정</a>
+          <a th:href="@{'/book/update/' + ${book.no}}">수정</a>
         </td>
         <td>
           <a th:href="@{'/book/delete?num=' + ${book.no}}">삭제</a>
