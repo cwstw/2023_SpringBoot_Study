@@ -32,7 +32,4 @@ public class Book {
         return modelMapper.map(bookBean,Book.class);
     }
 
-    public static Book updateBook(BookBean bookBean) {
-        return modelMapper.map(bookBean,Book.class);
-    }
 }
