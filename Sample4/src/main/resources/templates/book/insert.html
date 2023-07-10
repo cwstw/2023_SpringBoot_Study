@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<th:block layout:fragment="css">
+  <style>
+  .fieldError{
+    color:red;
+    fon-size:13pt;
+  }
+</style>
+</th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+  ${document}.ready(function(){
+    //자바스크립트로 가져오기 [[]]로 사용
+    var bookstoreString = [[${bookBean.bookstore}]];
+    console.log("bookstoreString : "+bookstoreString);
+
+    //선택된 체크박스 기억하기
+    var bookstoreList = $('input[name=bookstore]');
+    bookstoreList.each(function(){
+      var curr = $(this).val();
+      var result = bookstoreString.indexOf(curr); //있으면 0, 없으면 -1
+      console.log("curr : "+curr);
+      console.log("result : "+result);
+      //만약 result가 -1이 아니면 체크
+      if(result != -1){
+        $(this).attr('checked',true);
+      }
+    })
+  </script>
+</th:block>
+<div class="content" layout:fragment="content">
+  <h2>도서등록</h2>
+  <form method="post" action="/book/insert" name="myform" th:object="${bookBean}">
+    <div class="form-group">
+      <b>제목</b>
+      <input class="form-control" th:field="${bookBean.title}" type="text" placeholder="제목을 입력하세요">
+      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>저자</b>
+      <input class="form-control" th:field="${bookBean.author}" type="text" placeholder="저자를 입력하세요">
+      <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>출판사</b>
+      <input class="form-control" th:field="${bookBean.publisher}" type="text" placeholder="출판사를 입력하세요">
+      <p th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>가격</b>
+      <input class="form-control" th:field="${bookBean.price}" type="text" placeholder="가격을 입력하세요">
+      <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>입고일</b>
+      <input class="form-control" th:field="${bookBean.buy}" type="date">
+      <p th:if="${#fields.hasErrors('buy')}" th:errors="*{buy}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>배송비</b>
+      <div class="form-check-inline">
+        <input class="form-check-input"  name="kind" value="유료" type="radio">유료 <br>
+        <input class="form-check-input" name="kind" value="무료" type="radio">무료
+      </div>
+      <p th:if="${#fields.hasErrors('kind')}" th:errors="*{kind}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>구입가능 서점</b>
+      <div class="form-check-inline">
+        <input class="form-check-input" name="bookstore" value="교보문고" type="checkbox">교보문고 <br>
+        <input class="form-check-input" name="bookstore" value="알라딘" type="checkbox">알라딘 <br>
+        <input class="form-check-input" name="bookstore" value="yes24" type="checkbox">yes24 <br>
+        <input class="form-check-input" name="bookstore" value="인터파크" type="checkbox">인터파크
+      </div>
+      <p th:if="${#fields.hasErrors('bookstore')}" th:errors="*{bookstore}" class="fieldError"></p>
+    </div>
+    <div class="form-group">
+      <b>보유 수량</b>
+      <select class="custom-select" name="count">
+        <option value="">--- 선택해주세요</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <p th:if="${#fields.hasErrors('count')}" th:errors="*{count}" class="fieldError"></p>
+      <div style="text-align:center;">
+        <button class="btn btn-primary" type="submit" id="submitButton">추가하기</button>
+      </div>
+    </div>
+  </form>
+</div>
+</html>
