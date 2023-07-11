@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<th:block layout:fragment="css">
+  <style>
+        .fieldError{
+            color : red;
+            font-size:11pt;
+        }
+  </style>
+</th:block>
+<th:block layout:fragment="script">
+  <script th:inline = "javascript">
+        $(document).ready(function(){
+
+        var genreString = [[${gameBean.genre}]];
+        console.log('genreString:' + genreString);
+
+        var genreList = $('input[name=genre]');
+        genreList.each(function(){
+            var curr = $(this).val();
+            var result = genreString.indexOf(curr);
+            console.log(curr +":"+result);
+            if(result != -1){
+                $(this).attr('checked',true);
+            }
+        });
+    });
+  </script>
+</th:block>
+<!-- ================= style&script End ===================== -->
+
+<div class="content" layout:fragment="content">
+  <h2>게임 추가하기</h2>
+  <form name="gameForm" action="/game/insert" method="post" th:object="${gameBean}">
+    <table class="table">
+      <tr>
+        <th>타이틀</th>
+        <td>
+          <input class="form-control" type="text" th:field="*{title}" placeholder="타이틀을(를) 입력해주세요.">
+          <p th:if="#{fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+        </td>
+      </tr>
+      <tr>
+        <th>가격</th>
+        <td>
+          <input class="form-control" type="text" th:field="*{price}" placeholder="가격을(를) 입력해주세요.">
+          <p th:if="#{fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
+        </td>
+      </tr>
+      <tr>
+        <th>언어</th>
+        <td>
+          <select class="custom-select" th:field="*{lang}">
+            <option value="">=== 선택해주세요 ===</option>
+            <option th:each="ll :${lang}" th:value="${ll}" th:text="${ll}"></option>
+          </select>
+          <p th:if="#{fields.hasErrors('lang')}" th:errors="*{lang}" class="fieldError"></p>
+        </td>
+      </tr>
+      <tr>
+        <th>장르</th>
+        <td>
+          <div class="form-check form-check-inline" th:each="gl :${genre}">
+            <input class="form-check-input" type="checkbox" name="genre" th:value="${gl}" th:field="*{genre}">
+            <label class="form-check-label" th:text="${gl}">
+          </div>
+          <p th:if="#{fields.hasErrors('genre')}" th:errors="*{genre}" class="fieldError"></p>
+        </td>
+      </tr>
+      <tr>
+        <th>플랫폼</th>
+        <td>
+          <div class="form-check form-check-inline" th:each="pl :${platform}">
+            <input class="form-check-input" type="radio" name="platform" th:value="${pl}" th:field="*{platform}">
+            <label class="form-check-label" th:text="${pl}">
+          </div>
+          <p th:if="#{fields.hasErrors('platform')}" th:errors="*{platform}" class="fieldError"></p>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align:center;">
+      <button type="submit" class="btn btn-primary">추가하기</button>
+    </div>
+  </form>
+</div>
+
+</html>
