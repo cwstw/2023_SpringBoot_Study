@@ -3,11 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/2023_SpringBoot_Study.iml" filepath="$PROJECT_DIR$/.idea/2023_SpringBoot_Study.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Sample1/Sample1.iml" filepath="$PROJECT_DIR$/Sample1/Sample1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Sample2/Sample2.iml" filepath="$PROJECT_DIR$/Sample2/Sample2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Sample3/Sample3.iml" filepath="$PROJECT_DIR$/Sample3/Sample3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Sample4/Sample4.iml" filepath="$PROJECT_DIR$/Sample4/Sample4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Sample5/Sample5.iml" filepath="$PROJECT_DIR$/Sample5/Sample5.iml" />
     </modules>
   </component>
 </project>
