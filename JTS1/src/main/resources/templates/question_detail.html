@@ -1,13 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-    <div class="container my-3">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
     <!--질문-->
     <h1 class="border-bottom py-2" th:text="${question.subject}"></h1>
     <div class="card my-3">
@@ -36,10 +31,13 @@
     </div>
     <!--답변 반복 끝-->
     <!--답변 작성-->
-    <form class="my-3" th:action="@{|/answer/create/${question.id}|}" method="post">
-        <textarea class="form-control" name="content" id="content" rows="15"></textarea>
+    <form class="my-3" th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post">
+<!--        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">-->
+<!--            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
+<!--        </div>-->
+        <div th:replace="~{form_error :: formErrorsFragment}"></div>
+        <textarea class="form-control" th:field="*{content}" id="content" rows="15"></textarea>
         <input class="btn btn-primary my-2" type="submit" value="답변등록">
     </form>
     </div>
-</body>
 </html>
