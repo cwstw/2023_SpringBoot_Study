@@ -5,14 +5,14 @@
 <div layout:fragment="content" class="container my-3">
     <table class="table">
         <thead class="table-dark">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="question, loop : ${qList}">
+        <tr th:each="question, loop : ${paging}">
             <td th:text="${loop.count}"></td>
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}"
@@ -22,6 +22,38 @@
         </tr>
         </tbody>
     </table>
+
+    <!--paging start-->
+    <!--페이지가 비어있지 않으면 조건문 수행-->
+    <div th:if="${!paging.isEmpty}">
+        <ul class="pagination justify-content-center">
+            <!--이전 페이지가 없으면 class 에 disable 추가-->
+            <li class="page-item" th:classappend="${paging.number == startPage-1} ? 'disable'">
+                <!--이전을 누르면 한 페이지 전으로 이동-->
+                <a class="page-link"
+                   th:href="@{|?page=${paging.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <!--page 변수에 0부터 전체 페이지-1 만큼 1씩 증가해서 저장-->
+            <!--page 변수가 현재 페이지 번호와 같으면 active 클래스 추가-->
+            <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == nowPage} ? 'active'"
+                class="page-item">
+                <!--현재 페이지 값으로 링크-->
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page-1}|}"></a>
+            </li>
+            <!--다음 페이지가 없으면 class 에 disable 추가-->
+            <li class="page-item" th:classappend="${paging.number == endPage} ? 'disable'">
+                <!--다음을 누르면 한 페이지 앞으로 이동-->
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--paging end-->
     <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
 </div>
 </html>

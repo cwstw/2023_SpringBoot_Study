@@ -1,37 +1,23 @@
 package com.mysite.sbb;
 
-import com.mysite.sbb.entity.Answer;
-import com.mysite.sbb.entity.Question;
-import com.mysite.sbb.repository.AnswerRepository;
-import com.mysite.sbb.repository.QuestionRepository;
-
-import jakarta.transaction.Transactional;
+import com.mysite.sbb.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @SpringBootTest
 public class SbbApplicationTests {
 
 	@Autowired
-	private QuestionRepository questionRepository;
-
-	@Autowired
-	private AnswerRepository answerRepository;
+	private QuestionService questionService;
 
 	@Test
-	public void testJpa() {
-		Optional<Answer> oa = this.answerRepository.findById(1);
-		assertTrue(oa.isPresent());
-		Answer a = oa.get();
-		assertEquals(2, a.getQuestion().getId());
+	void testJpa() {
+		for (int i = 1; i <= 300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+			String content = "내용무";
+			this.questionService.create(subject, content);
 		}
+	}
 }
