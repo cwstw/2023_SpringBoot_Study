@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
     <!--질문-->
@@ -36,7 +36,8 @@
 <!--            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
 <!--        </div>-->
         <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>
-        <textarea class="form-control" th:field="*{content}" id="content" rows="15"></textarea>
+        <textarea class="form-control" sec:authorize="isAnonymous()" disabled th:field="*{content}" id="content" rows="15"></textarea>
+        <textarea class="form-control" sec:authorize="isAuthenticated()" th:field="*{content}" id="content" rows="15"></textarea>
         <input class="btn btn-primary my-2" type="submit" value="답변등록">
     </form>
     </div>
