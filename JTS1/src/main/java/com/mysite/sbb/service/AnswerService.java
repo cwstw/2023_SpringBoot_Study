@@ -16,14 +16,15 @@ import java.util.Optional;
 public class AnswerService {
     private final AnswerRepository answerRepository;
 
-    public void create(Question question, String content,
-                       SiteUser author){
+    public Answer create(Question question, String content,
+                         SiteUser author){
         Answer answer = new Answer();
         answer.setContent(content);//답변
         answer.setCreateDate(LocalDateTime.now());//시간
         answer.setQuestion(question);//질문
         answer.setAuthor(author);//작성자
         this.answerRepository.save(answer);//답변 정보 저장
+        return answer;
     }
 
     public Answer getAnswer(Integer id) {
@@ -43,5 +44,10 @@ public class AnswerService {
 
     public void delete(Answer answer) {
         this.answerRepository.delete(answer);
+    }
+
+    public void vote(Answer answer, SiteUser siteUser) {
+        answer.getVoter().add(siteUser);
+        this.answerRepository.save(answer);
     }
 }
