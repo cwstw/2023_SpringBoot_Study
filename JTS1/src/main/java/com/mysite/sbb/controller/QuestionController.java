@@ -31,8 +31,9 @@ public class QuestionController {
 
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam(value="page", defaultValue = "0") int page) {
-        Page<Question> paging = this.questionService.getList(page);
+                       @RequestParam(value="page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Question> paging = this.questionService.getList(page, kw);
 
         //1부터 시작하도록
         int nowPage = paging.getPageable().getPageNumber()+1;
@@ -43,6 +44,8 @@ public class QuestionController {
         model.addAttribute("nowPage",nowPage);
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage",endPage);
+        model.addAttribute("kw",kw);
+
         return "question_list";
     }
 

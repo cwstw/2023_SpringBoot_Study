@@ -3,6 +3,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
+
+    <!--검색창-->
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="search_kw" class="form-control" th:value="${kw}">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+            </div>
+        </div>
+    </div>
+
+    <!--목록-->
     <table class="table">
         <thead class="table-dark">
         <tr class="text-center">
@@ -37,7 +52,7 @@
             <li class="page-item" th:classappend="${paging.number == startPage-1} ? 'disable'">
                 <!--이전을 누르면 한 페이지 전으로 이동-->
                 <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}|}">
+                   href="javascript:void(0)" th:data-page="${paging.number-1}">
                     <span>이전</span>
                 </a>
             </li>
@@ -48,18 +63,38 @@
                 th:classappend="${page == nowPage} ? 'active'"
                 class="page-item">
                 <!--현재 페이지 값으로 링크-->
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page-1}|}"></a>
+                <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page-1}"></a>
             </li>
             <!--다음 페이지가 없으면 class 에 disable 추가-->
             <li class="page-item" th:classappend="${paging.number == endPage} ? 'disable'">
                 <!--다음을 누르면 한 페이지 앞으로 이동-->
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
                     <span>다음</span>
                 </a>
             </li>
         </ul>
     </div>
     <!--paging end-->
-    <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+
+    <!--검색폼-->
+    <form th:action="@{/question/list}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
 </div>
+    <script layout:fragment="script" type='text/javascript'>
+        const page_elements = document.getElementsByClassName("page-link");
+        Array.from(page_elements).forEach(function(element) {
+            element.addEventListener('click', function() {
+                document.getElementById('page').value = this.dataset.page;
+                document.getElementById('searchForm').submit();
+            });
+        });
+        const btn_search = document.getElementById("btn_search");
+        btn_search.addEventListener('click', function() {
+            document.getElementById('kw').value = document.getElementById('search_kw').value;
+            document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+            document.getElementById('searchForm').submit();
+        });
+    </script>
 </html>
